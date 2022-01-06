@@ -52,6 +52,30 @@ void foodListRead()
     foodDataBase.close();
 }
 
+///class for customerPanel file
+class customerfile
+{
+    public:
+        string userName,password;
+};
+
+class customerfile customerList[1000];
+int c;
+
+///reading customerPanel file
+void customerPanelRead()
+{
+    c = 0;
+    ifstream customerDB("customerPanel.txt");
+    while(customerDB>>customerList[c].userName)
+    {
+        customerDB>>customerList[c].password;
+        c++;
+    }
+    customerDB.close();
+}
+
+
 ///see all food of foodMenu file
 void seeAllFood()
 {
@@ -375,6 +399,59 @@ int quantityChecking(string name,int quantity)
 class customer
 {
     public:
+        int customercheck()
+        {
+            int select;
+            cout << "Enter 1 for signIN." << endl;
+            cout << "Enter 2 for signUP." << endl;
+            cout << "Enter 0 for exit." << endl;
+            cin>>select;
+            if(select == 1)
+            {
+                again:
+                    customerPanelRead();
+                    string usermail,password;
+                    cout << "Enter your email address:" << endl;
+                    cin >> usermail;
+                    cout << "Enter your password:" << endl;
+                    cin >> password;
+                    for(int i = 0;i < c;i++)
+                    {
+                        if((customerList[i].userName == usermail) && (customerList[i].password == password))
+                            return 1;
+                    }
+                    cout << "Invalid email address or password.Try again" << endl;
+                    goto again;
+            }
+            else if(select == 2)
+            {
+                start:
+                    customerPanelRead();
+                    string usermail,password;
+                    cout << "Enter your email address:" << endl;
+                    cin >> usermail;
+                    cout << "Enter your password:" << endl;
+                    cin >> password;
+                    for(int i = 0;i < c;i++)
+                    {
+                        if(customerList[i].userName == usermail)
+                        {
+                            cout << "This usermail already existed.Try with another one." << endl;
+                            goto start;
+                        }
+                    }
+                    ofstream addCustomer("customerPanel.txt",ios::app);
+                    addCustomer<<endl<<usermail<<endl;
+                    addCustomer<<password;
+                    addCustomer.close();
+                    cout << "..SignUp Successfully Done.." << endl;
+                    return 1;
+            }
+            else
+                return 0;
+        }
+
+
         int customerSelection()
         {
             int select;
@@ -466,6 +543,7 @@ int main()
             else
             {
                 cout << "You are not in our server.Contact with your authority." << endl;
+                return 0;
             }
             cout<<"----------------------"<<endl;
             string s;
@@ -478,28 +556,34 @@ int main()
         }
         else if(check == 2)
         {
-            start:
-                int select;
-                customer object;
-                select = object.customerSelection();
-                if(select == 1)
-                {
-                    seeAllFood();
-                }
-                else if(select == 2)
-                {
-                    object.orderFood();
-                }
-                else if(select == 0)
-                    return 0;
-                cout<<"----------------------"<<endl;
-                string s;
-                cout << "Do you want to run it again?" << endl;
-                cin >> s;
-                if(toupper(s[0]) == 'Y')
-                    goto start;
-                else
-                    return 0;
+            customer object;
+            int sel = object.customercheck();
+            if(sel == 0)
+                return 0;
+            else
+            {
+                start:
+                    int select;
+                    select = object.customerSelection();
+                    if(select == 1)
+                    {
+                        seeAllFood();
+                    }
+                    else if(select == 2)
+                    {
+                        object.orderFood();
+                    }
+                    else if(select == 0)
+                        return 0;
+                    cout<<"----------------------"<<endl;
+                    string s;
+                    cout << "Do you want to run it again?" << endl;
+                    cin >> s;
+                    if(toupper(s[0]) == 'Y')
+                        goto start;
+                    else
+                        return 0;
+            }
         }
     return 0;
 }
