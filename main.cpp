@@ -436,15 +436,14 @@ class customer
                         if((customerList[i].userName == usermail) && (customerList[i].password == password))
                             return 1;
                     }
-                    system("color 04");
+                    system("color 74");
                     cout << "Invalid email address or password.Try again" << endl;
                     goto again;
             }
             else if(select == 2)
             {
+                system("cls");
                 start:
-                    system("cls");
-                    ///system("cls");
                     customerPanelRead();
                     string usermail,password;
                     cout << "Enter your email address:" << endl;
