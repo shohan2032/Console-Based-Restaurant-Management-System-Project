@@ -1,5 +1,4 @@
 #include<bits/stdc++.h>
-
 using namespace std;
 
 ///for owner list file
@@ -79,6 +78,7 @@ void customerPanelRead()
 ///see all food of foodMenu file
 void seeAllFood()
 {
+    system("color 09");
     foodListRead();
     for(int i = 0;i < f;i++)
     {
@@ -98,6 +98,7 @@ class owner
         ///getting owner info
         void ownerInfo()
         {
+            system("cls");
             cout << "Enter your ID." << endl;
             cin >> id;
             cout <<"Enter your name." << endl;
@@ -128,6 +129,8 @@ class owner
         ///those are the thing a ownercan do in this owner pannel
         int ownerSelection()
         {
+            system("cls");
+            system("color 07");
             int select;
             cout << "Access Granted!!! \n \n \n" << endl;
             cout<<"To Add items in menu press 1:"<<endl;
@@ -146,6 +149,8 @@ class owner
         ///adding new food in foodMenu file
         void addItems()
         {
+            ///system("cls");
+            system("color 0E");
             ///foodListRead();
             int price,menuNum,quantity,select;
             string name;
@@ -180,6 +185,8 @@ class owner
         ///editing particular food in foodMenu file
         void editItems()
         {
+            ///system("cls");
+            system("color 0E");
             int price,menuNum,quantity,select,menuEdit;
             string name;
             cout << "How many item do you want to edit?" << endl;
@@ -222,6 +229,8 @@ class owner
         ///deleting particular item from food menu file
         void deleteItem()
         {
+            ///system("cls");
+            system("color 0E");
             int menuNum,select;
             cout << "How many item do you want to delete?" << endl;
             cin >> select;
@@ -250,6 +259,8 @@ class owner
         ///adding new owner in ownerList file
         void addOwner()
         {
+            ///system("cls");
+            system("color 0E");
             ///ownerListRead();
             int select;
             string id,name,number;
@@ -280,6 +291,8 @@ class owner
         ///Editing particular owner info
         void editOwner()
         {
+            ///system("cls");
+            system("color 0E");
             int select;
             string name,id,number,editOw;
             cout << "How many owner's info do you want to edit?" << endl;
@@ -318,6 +331,8 @@ class owner
         ///deleting particular owner from ownerList file
         void deleteOwner()
         {
+            ///system("cls");
+            system("color 0E");
             int select;
             string id;
             cout << "How many owner do you want to delete?" << endl;
@@ -346,6 +361,7 @@ class owner
         ///see all owner of ownerList file
         void seeAllOwner()
         {
+            system("color 02");
             ownerListRead();
             for(int i = 0;i < z;i++)
             {
@@ -354,8 +370,6 @@ class owner
                 cout << "Owner NUMBER:"<<ownerList[i].NUMBER << endl << endl;
             }
         }
-
-
 };
 
 int amount = 0;
@@ -401,6 +415,7 @@ class customer
     public:
         int customercheck()
         {
+            system("cls");
             int select;
             cout << "Enter 1 for signIN." << endl;
             cout << "Enter 2 for signUP." << endl;
@@ -409,6 +424,7 @@ class customer
             if(select == 1)
             {
                 again:
+                    system("cls");
                     customerPanelRead();
                     string usermail,password;
                     cout << "Enter your email address:" << endl;
@@ -420,12 +436,15 @@ class customer
                         if((customerList[i].userName == usermail) && (customerList[i].password == password))
                             return 1;
                     }
+                    system("color 04");
                     cout << "Invalid email address or password.Try again" << endl;
                     goto again;
             }
             else if(select == 2)
             {
                 start:
+                    system("cls");
+                    ///system("cls");
                     customerPanelRead();
                     string usermail,password;
                     cout << "Enter your email address:" << endl;
@@ -436,6 +455,7 @@ class customer
                     {
                         if(customerList[i].userName == usermail)
                         {
+                            system("color 04");
                             cout << "This usermail already existed.Try with another one." << endl;
                             goto start;
                         }
@@ -444,6 +464,7 @@ class customer
                     addCustomer<<endl<<usermail<<endl;
                     addCustomer<<password;
                     addCustomer.close();
+                    system("color 02");
                     cout << "..SignUp Successfully Done.." << endl;
                     return 1;
             }
@@ -454,6 +475,8 @@ class customer
 
         int customerSelection()
         {
+            system("cls");
+            system("color 07");
             int select;
             cout<<"====================="<<endl;
             cout<<"Welcome to Resturant"<<endl;
@@ -477,31 +500,38 @@ class customer
                 cout << "Enter the " << i << " food name that you want to order:";
                 cin >> name;
                 again:
+                    system("color 07");
                     cout << "Enter the quantity:";
                     cin >> quantity;
                     available = quantityChecking(name,quantity);
                     if(available)
                     {
                         vc.push_back({name,quantity});
+                        system("cls");
                     }
                     else
                     {
+                        system("cls");
                         string check;
+                        system("color 04");
                         cout << "Sorry!We do not have that much of quantity.Do you want to order less?" << endl;
                         cin >> check;
                         if(toupper(check[0])=='Y')
+                        {
+                            system("cls");
                             goto again;
+                        }
                         else
                             return;
                     }
             }
 
-            for(int i = 0;i < select;i++)
+            system("color 02");
+            for(int i = 0;i < vc.size();i++)
             {
                 cout << "You ordered:" << vc[i].first << endl;
                 cout << "Quantity:" << vc[i].second << endl;
             }
-
             cout << "Your total bill is:" << amount << endl;
         }
 };
@@ -509,6 +539,7 @@ class customer
 
 int main()
 {
+        system("cls");
         int check,found = 0;
         cout << "To enter as a owner click 1:" << endl;
         cout << "To enter as a customer click 2:" << endl;
@@ -522,26 +553,55 @@ int main()
                 again:
                     found = object.ownerSelection();
                     if(found == 1)
+                    {
+                        system("cls");
                         object.addItems();
+                    }
                     else if(found == 2)
+                    {
+                        system("cls");
                         object.editItems();
+                    }
                     else if(found == 3)
+                    {
+                        system("cls");
                         object.deleteItem();
+                    }
                     else if(found == 4)
+                    {
+                        system("cls");
                         object.addOwner();
+                    }
                     else if(found == 5)
+                    {
+                        system("cls");
                         object.editOwner();
+                    }
                     else if(found == 6)
+                    {
+                        system("cls");
                         object.deleteOwner();
+                    }
                     else if(found == 7)
+                    {
+                        system("cls");
                         object.seeAllOwner();
+                    }
                     else if(found == 8)
+                    {
+                        system("cls");
                         seeAllFood();
+                    }
                     else if(found == 9)
+                    {
+                        system("cls");
                         return 0;
+                    }
             }
             else
             {
+                system("cls");
+                system("color 04");
                 cout << "You are not in our server.Contact with your authority." << endl;
                 return 0;
             }
@@ -567,10 +627,12 @@ int main()
                     select = object.customerSelection();
                     if(select == 1)
                     {
+                        system("cls");
                         seeAllFood();
                     }
                     else if(select == 2)
                     {
+                        system("cls");
                         object.orderFood();
                     }
                     else if(select == 0)
